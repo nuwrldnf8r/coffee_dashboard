@@ -14,5 +14,15 @@
   "type": "module",
   "workspaces": [
     "src/coffee_dashboard_frontend"
-  ]
+  ],
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "latlon-geohash": "^2.0.0",
+    "mapbox-gl": "^3.3.0",
+    "rc-slider": "^10.6.2",
+    "react-dom": "^18.3.1"
+  }
 }

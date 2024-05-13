@@ -21,6 +21,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://127.0.0.1:4943",
+        //target: "https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io",
         changeOrigin: true,
       },
     },
