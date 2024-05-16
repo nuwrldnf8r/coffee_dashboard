@@ -7,6 +7,7 @@ import { coffee_dashboard_backend } from 'declarations/coffee_dashboard_backend'
 import { decode, decodeGeohash, encodeGeoHash} from './lib/utils'
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
+import { AuthClient } from "@dfinity/auth-client"
 
 import populate from './lib/populate_test'
 window.populate = populate
@@ -49,6 +50,7 @@ function App() {
   const [showSensorData, setShowSensorData] = useState(false)
   const [sensorButtonSelected, setSensorButtonSelected] = useState(false)
   const distanceRadius = useRef(1.976)
+  const [signedIn, setSignedIn] = useState(false)
   const zoom = useRef(16)
   
   const getFarms = async () => {
@@ -191,12 +193,24 @@ function App() {
 
   return (
     <>
-    <header style={{backgroundColor: colors.bggrey, width: '100%', height: 50, margin: 0, padding: 0}}>
+    <header style={{backgroundColor: colors.bggrey, width: '100%', height: 50, margin: 0, padding: 0, position: 'relative'}}>
       <div style={{paddingTop: 5, paddingLeft: 25}}>
         <Button icon={true} selected={true} background="green" onClick={getFarms}>{BeansIcon}</Button>
         <Button icon={true} selected={sensorButtonSelected} background="green" onClick={()=>{
           setSensorButtonSelected(!sensorButtonSelected)
         }}>{SignalIcon}</Button>
+        {!signedIn && 
+        <div style={{position: 'absolute', right: 10, top: 10}}><Button width={120} onClick={async ()=>{
+          const authClient = await AuthClient.create()
+          authClient.login({
+            // 7 days in nanoseconds
+            maxTimeToLive: BigInt(7 * 24 * 60 * 60 * 1000 * 1000 * 1000),
+            onSuccess: async () => {
+              setSignedIn(true)
+            },
+          })
+        }}>Sign in</Button></div>
+        }
       </div>
     </header>
     <main style={{height: '100%', width: '100%', position: 'relative', bottom: 0, top: 0, fontFamily: '"Poppins", sans-serif', fontWeight: 400}}>
