@@ -214,6 +214,8 @@ function App() {
       </div>
     </header>
     <main style={{height: '100%', width: '100%', position: 'relative', bottom: 0, top: 0, fontFamily: '"Poppins", sans-serif', fontWeight: 400}}>
+      <>
+      {signedIn &&
       <div style={{display: 'flex', height: '100%', width: '100%'}}>
         <SideBar loading={(farms)} data={items.current} selected={selectedBtn} onClick={selectItem}/>
         <div style={{flex: 4, flexBasis: '80%', padding: 50}}>
@@ -262,8 +264,13 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
       
+      </div>
+      }
+      {!signedIn &&
+        <div style={{height: 800, width: '100%', display: 'block'}}><div style={{fontFamily: '"Poppins", sans-serif', fontWeight: 400, display: 'block', marginLeft: 'auto', marginRight: 'auto', marginTop: 300, textAlign: 'center'}}>Please sign in to view the dashboard</div></div>
+      }
+      </>
     </main>
     <footer style={{backgroundColor: colors.bggrey, opacity: '0.5', width: '100%', height: 100}}></footer>
     {showSensorData && <div style={{position: 'absolute', top: 0, bottom: 0, left: '20%', right: 0, fontFamily: '"Poppins", sans-serif', fontWeight: 400}} onClick={(e)=>{
